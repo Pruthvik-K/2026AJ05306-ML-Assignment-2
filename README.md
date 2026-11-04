@@ -1,6 +1,6 @@
 # Frog Species Classification
 
-A machine learning project that classifies frog species using MFCC features extracted from frog calls. The project implements five classification algorithms, compares their performance, and provides a Streamlit application to evaluate the trained models.
+A machine learning project that classifies frog species using MFCC features extracted from frog calls. Five classification algorithms are implemented, compared and deployed through a Streamlit application.
 
 ## Project Links
 
@@ -8,7 +8,7 @@ A machine learning project that classifies frog species using MFCC features extr
 - **Live Application:** https://2026aj05306-ml-assignment-2-nva82wixowkc33lqujqgkz.streamlit.app/
 - **Dataset:** [UCI – Anuran Calls (MFCCs)](https://archive.ics.uci.edu/dataset/406/anuran+calls+mfccs)
 
-## Dataset
+## Dataset Description
 
 The project uses the Anuran Calls (MFCCs) dataset from the UCI Machine Learning Repository.
 
@@ -17,13 +17,13 @@ The project uses the Anuran Calls (MFCCs) dataset from the UCI Machine Learning 
 - 10 frog species
 - No missing values
 
-`Species` is used as the target variable. `Family`, `Genus` and `RecordID` are excluded from model training.
+`Species` is the target variable. `Family`, `Genus` and `RecordID` are excluded from model training.
 
-A group-aware train-test split is used based on `RecordID` to prevent observations from the same recording appearing in both training and testing sets.
+A group-aware train-test split is performed using `RecordID` to ensure that observations from the same recording do not appear in both training and testing sets.
 
 ## Models Implemented
 
-Five classification algorithms are trained and evaluated:
+The following five classification algorithms are trained and evaluated:
 
 1. Logistic Regression
 2. Decision Tree
@@ -31,31 +31,37 @@ Five classification algorithms are trained and evaluated:
 4. Gaussian Naive Bayes
 5. Support Vector Machine (SVM)
 
-Feature scaling is applied where required. Hyperparameter tuning is performed using GridSearchCV with group-aware cross-validation and Macro F1 as the scoring metric.
+Feature scaling is applied where required. Hyperparameter tuning is performed using GridSearchCV with group-aware cross-validation, using Macro F1 as the scoring metric.
 
-## Evaluation
+## Model Evaluation
 
-The models are evaluated using:
+The models are evaluated using Accuracy, AUC, Precision, Recall, F1 Score and Matthews Correlation Coefficient (MCC). Macro F1 is also included to better understand performance across the imbalanced species classes.
 
-- Accuracy
-- AUC (Macro One-vs-Rest)
-- Precision
-- Recall
-- Weighted F1 Score
-- Macro F1 Score
-- Matthews Correlation Coefficient (MCC)
+### Comparison of Tuned Models
 
-The tuned models achieved the following results on the held-out test dataset:
+All values below are calculated on the held-out test dataset.
 
-| Model | Accuracy | Macro F1 |
-|---|---:|---:|
-| Logistic Regression | 89.76% | 63.77% |
-| Decision Tree | 82.96% | 53.23% |
-| KNN | 90.78% | 67.32% |
-| Naive Bayes | 81.69% | 56.42% |
-| SVM | 90.97% | 58.88% |
+| Model | Accuracy | AUC | Precision | Recall | F1 | MCC | Macro F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Logistic Regression | 0.8976 | 0.9748 | 0.9085 | 0.8976 | 0.9003 | 0.8552 | 0.6377 |
+| Decision Tree | 0.8296 | 0.8393 | 0.8834 | 0.8296 | 0.8495 | 0.7619 | 0.5323 |
+| KNN | 0.9078 | 0.9334 | 0.9283 | 0.9078 | 0.9129 | 0.8699 | 0.6732 |
+| Naive Bayes | 0.8169 | 0.9633 | 0.8797 | 0.8169 | 0.8385 | 0.7490 | 0.5642 |
+| SVM | 0.9097 | 0.9832 | 0.9069 | 0.9097 | 0.9050 | 0.8724 | 0.5888 |
 
-KNN achieved the highest Macro F1, while SVM achieved the highest Accuracy.
+*Precision, Recall and F1 are weighted averages. AUC is Macro One-vs-Rest.*
+
+### Observations
+
+| Model | Observation |
+|---|---|
+| Logistic Regression | Provides consistent performance with 89.76% accuracy and a strong AUC of 0.9748. |
+| Decision Tree | Achieves lower performance compared to the other models, with an accuracy of 82.96%. |
+| KNN | Achieves the highest Macro F1 (0.6732) and Weighted F1 (0.9129), indicating better balanced classification performance across species. |
+| Naive Bayes | Achieves a high AUC but has comparatively lower accuracy and F1 score. |
+| SVM | Achieves the highest accuracy (90.97%), AUC (0.9832) and MCC (0.8724) among the tuned models. |
+
+**Overall Winner: KNN**, when Macro F1 is prioritized because of the class imbalance. SVM is the strongest model in terms of Accuracy, AUC and MCC.
 
 ## Streamlit Application
 
@@ -67,7 +73,7 @@ The application allows users to:
 - View evaluation metrics, confusion matrix and classification report.
 - Download predictions as a CSV file.
 
-The application uses saved models and does not perform training when a dataset is uploaded.
+The application loads previously trained models and does not perform training when a dataset is uploaded.
 
 ## Project Structure
 
@@ -96,13 +102,13 @@ cd 2026AJ05306-ML-Assignment-2
 pip install -r requirements.txt
 ```
 
-Start the application:
+Run the application:
 
 ```bash
 streamlit run app.py
 ```
 
-To explore the complete training and evaluation process, open `ASSIGNMENT_2.ipynb` using Jupyter Notebook.
+To explore the complete training and evaluation workflow, open `ASSIGNMENT_2.ipynb` using Jupyter Notebook.
 
 ## Technologies Used
 
